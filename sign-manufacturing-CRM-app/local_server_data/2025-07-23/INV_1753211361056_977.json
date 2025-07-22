@@ -1,0 +1,17 @@
+{
+  "customer_name": "Ranga Parimi",
+  "phone_number": "07842269999",
+  "email_address": "RANGA2003SAI@GMAIL.COM",
+  "item_type": "acrylic",
+  "size": "12x18",
+  "quantity": 10,
+  "rate": 1010,
+  "total": 10100,
+  "delivery_type": "delivery",
+  "payment_mode": "upi",
+  "notes": "ijklj",
+  "material": "3M",
+  "lamination": null,
+  "discount": 10,
+  "invoice_id": "INV_1753211361056_977"
+}

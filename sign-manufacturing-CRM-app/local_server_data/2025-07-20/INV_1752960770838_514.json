@@ -1,0 +1,17 @@
+{
+  "customer_name": "Ranga Parimi ",
+  "phone_number": "07842269999",
+  "email_address": "RANGA2003SAI@GMAIL.COM",
+  "item_type": "foam",
+  "size": "12x13",
+  "quantity": 2,
+  "rate": 10000,
+  "total": 20000,
+  "delivery_type": "delivery",
+  "payment_mode": "upi",
+  "notes": "good",
+  "material": "3mm",
+  "lamination": true,
+  "discount": 2,
+  "invoice_id": "INV_1752960770838_514"
+}

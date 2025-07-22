@@ -1,0 +1,7 @@
+reportlab==4.4.2
+pillow==11.3.0
+yagmail==0.15.293
+requests==2.32.4
+lxml==6.0.0
+premailer==3.10.0
+python-dotenv==1.0.0 

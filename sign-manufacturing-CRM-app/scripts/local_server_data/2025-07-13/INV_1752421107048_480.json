@@ -1,0 +1,14 @@
+{
+  "customer_name": "Test Customer",
+  "phone_number": "+91-9876543210",
+  "email_address": "test@example.com",
+  "item_type": "Flex Banner",
+  "size": "4x6 feet",
+  "quantity": 2,
+  "rate": 150.0,
+  "total": 300.0,
+  "delivery_type": "Local Pickup",
+  "payment_mode": "Cash",
+  "notes": "Test order for integration verification",
+  "invoice_id": "INV_1752421107048_480"
+}

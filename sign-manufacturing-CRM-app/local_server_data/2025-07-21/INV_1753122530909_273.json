@@ -1,0 +1,17 @@
+{
+  "customer_name": "Ranga Parimi ",
+  "phone_number": "07842269999 ",
+  "email_address": "RANGA2003SAI@GMAIL.COM",
+  "item_type": "metal",
+  "size": "32x21 ",
+  "quantity": 1000,
+  "rate": 1000,
+  "total": 1000000,
+  "delivery_type": "delivery",
+  "payment_mode": "upi",
+  "notes": "iok",
+  "material": null,
+  "lamination": null,
+  "discount": 5,
+  "invoice_id": "INV_1753122530909_273"
+}
