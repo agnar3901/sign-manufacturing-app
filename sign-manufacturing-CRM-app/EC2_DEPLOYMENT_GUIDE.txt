@@ -1,0 +1,141 @@
+AWS EC2 DEPLOYMENT GUIDE FOR NEXT.JS + NODE.JS + SQLITE APP
+========================================================
+
+This guide will help you deploy your fullstack Next.js + Node.js + SQLite app on a free-tier AWS EC2 instance (Ubuntu, t2.micro, 1GB RAM).
+
+--------------------------------------------------------
+STEP 1: CREATE AND LAUNCH AN EC2 INSTANCE
+--------------------------------------------------------
+1. Sign in to AWS Console → Go to EC2 → Launch Instance.
+2. Choose Ubuntu Server 22.04 LTS (or similar, Free Tier eligible).
+3. Instance type: t2.micro (Free Tier).
+4. Configure storage: Default is fine (8GB+ recommended).
+5. Security group:
+   - Allow SSH (port 22) from your IP.
+   - Allow HTTP (port 80) from anywhere.
+   - (Optional) Allow HTTPS (port 443) if you want SSL.
+6. Key pair: Create/download a .pem file for SSH access.
+7. Launch instance.
+
+--------------------------------------------------------
+STEP 2: CONNECT TO YOUR EC2 INSTANCE
+--------------------------------------------------------
+On your local machine:
+
+chmod 400 your-key.pem
+ssh -i your-key.pem ubuntu@<EC2_PUBLIC_DNS>
+
+- Replace 'your-key.pem' with your key file.
+- Replace <EC2_PUBLIC_DNS> with your instance’s public DNS/IP.
+
+--------------------------------------------------------
+STEP 3: INSTALL NODE.JS, NPM, PYTHON, AND GIT
+--------------------------------------------------------
+
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y git python3 python3-pip
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs
+node -v
+npm -v
+python3 --version
+
+--------------------------------------------------------
+STEP 4: UPLOAD YOUR PROJECT TO EC2
+--------------------------------------------------------
+Option A: Clone from GitHub
+
+git clone https://github.com/yourusername/your-repo.git
+cd your-repo
+
+Option B: Upload via SCP
+
+scp -i your-key.pem -r /path/to/your/project ubuntu@<EC2_PUBLIC_DNS>:~/your-app
+cd ~/your-app
+
+--------------------------------------------------------
+STEP 5: SET UP ENVIRONMENT VARIABLES
+--------------------------------------------------------
+If you use a .env file, create it on the server:
+
+nano .env
+# Paste your environment variables (e.g., JWT_SECRET, etc.)
+
+--------------------------------------------------------
+STEP 6: INSTALL DEPENDENCIES
+--------------------------------------------------------
+
+npm install
+# or
+pnpm install
+
+--------------------------------------------------------
+STEP 7: BUILD AND START YOUR APP
+--------------------------------------------------------
+
+npm run build
+npm start -- --hostname 0.0.0.0
+
+# Your app will be available at http://<EC2_PUBLIC_DNS>:3000
+
+--------------------------------------------------------
+STEP 8: (OPTIONAL) USE PM2 TO KEEP APP RUNNING
+--------------------------------------------------------
+
+sudo npm install -g pm2
+pm2 start npm --name "sign-app" -- start -- --hostname 0.0.0.0
+pm2 save
+pm2 startup
+
+--------------------------------------------------------
+STEP 9: (OPTIONAL) SET UP NGINX AS A REVERSE PROXY
+--------------------------------------------------------
+
+sudo apt install nginx
+sudo nano /etc/nginx/sites-available/default
+
+# Replace the server block with:
+
+server {
+    listen 80;
+    server_name _;
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+
+sudo systemctl restart nginx
+# Now your app is available at http://<EC2_PUBLIC_DNS>/
+
+--------------------------------------------------------
+STEP 10: (OPTIONAL) SET UP A DOMAIN AND SSL
+--------------------------------------------------------
+- Point your domain’s A record to your EC2 public IP.
+- Use Let’s Encrypt (https://certbot.eff.org/) for free SSL.
+
+--------------------------------------------------------
+STEP 11: (OPTIONAL) MAKE REGULAR BACKUPS OF YOUR SQLITE DATABASE
+--------------------------------------------------------
+
+cp local_server_data/database/signcraft.db ~/signcraft_backup_$(date +%F).db
+
+--------------------------------------------------------
+YOU’RE DONE!
+--------------------------------------------------------
+- Visit http://<EC2_PUBLIC_DNS>/ in your browser.
+- Your full app (frontend, backend, and SQLite database) is now live on EC2!
+
+--------------------------------------------------------
+TIPS
+--------------------------------------------------------
+- The AWS Free Tier gives you 750 hours/month of t2.micro usage for 12 months.
+- Always keep your .env and database files secure and backed up.
+- For more users or higher reliability, consider upgrading your instance or using a managed database in the future.
+
+--------------------------------------------------------
+If you want a ready-to-copy bash script for any step, or run into any issues, just ask! 
