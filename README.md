@@ -1,0 +1,109 @@
+Sign Manufacturing App - Detailed Description
+============================================
+
+Overview:
+---------
+This is a full-featured web application for a sign manufacturing business (Ranga Sign Factory). It manages customer orders, quotations, user authentication, and admin analytics. The app is designed for both regular users (customers/employees) and admin users, providing tailored dashboards and workflows for each.
+
+Key Features:
+-------------
+1. **User Authentication**
+   - Users can sign up and log in securely.
+   - JWT tokens are used for session management.
+   - Admin and regular user roles are supported.
+
+2. **User Dashboard**
+   - After login, users are redirected to the dashboard.
+   - The dashboard displays:
+     - Business branding and user info.
+     - Quick stats (total orders, pending orders).
+     - Tabs for New Order and Order History.
+     - Buttons for generating quotations (LED display and LED sign board).
+
+3. **Order Management**
+   - Users can place new orders using a detailed form.
+   - Order history is shown in a searchable, filterable table.
+   - Orders can be printed, and their status can be tracked.
+
+4. **Quotation Generation**
+   - Two types of quotations can be generated:
+     a) LED Advertisement Display Quotation
+     b) LED Sign Board Quotation (with detailed product table)
+   - Each opens a dialog with a form for customer and product details.
+   - On submission, a DOCX file is generated and downloaded, matching the business's official format.
+
+5. **Admin Dashboard**
+   - Admins are redirected to a separate dashboard with analytics, user management, and order oversight.
+   - Admins can manage users, view analytics, and access all orders.
+
+6. **API and Backend**
+   - RESTful API routes handle authentication, order management, and quotation generation.
+   - Quotation DOCX files are generated using the `docx` library on the server.
+   - Data is stored in a local SQLite database and JSON files for orders and users.
+
+7. **PDF/Document Generation**
+   - Quotation and invoice documents are generated dynamically based on user input.
+   - Documents follow the business's branding and legal requirements.
+
+8. **UI/UX**
+   - Built with React and Next.js, using modular UI components (Button, Dialog, Table, etc.).
+   - Responsive design for desktop and mobile.
+   - Consistent branding and modern look.
+
+Step-by-Step User Flow:
+----------------------
+1. **Sign Up / Login**
+   - User visits the app and signs up or logs in.
+   - On success, redirected to the dashboard.
+
+2. **Dashboard**
+   - User sees business info, stats, and their name.
+   - Can log out at any time.
+
+3. **Placing an Order**
+   - User clicks "New Order" tab.
+   - Fills out the order form (product, size, quantity, etc.).
+   - Submits the order; order appears in history.
+
+4. **Viewing Order History**
+   - User clicks "Order History" tab.
+   - Can view, search, and print past orders.
+
+5. **Generating a Quotation**
+   - User clicks either "New Quotation" or "New Quotation (LED Sign Board)" button.
+   - Fills out the form (customer info, products, prices, etc.).
+   - Submits; a DOCX file is generated and downloaded.
+
+6. **Admin Features**
+   - Admin logs in and is redirected to the admin dashboard.
+   - Can view analytics, manage users, and oversee all orders.
+
+Technical Structure:
+--------------------
+- **Frontend:** React (Next.js), modular components in `/components/`
+- **Backend:** Next.js API routes in `/app/api/`
+- **Database:** SQLite and JSON files in `/local_server_data/database/`
+- **Document Generation:** `docx` library for DOCX, custom PDF logic in `/lib/pdf-generator.ts`
+- **Authentication:** JWT-based, with role support
+- **Styling:** Tailwind CSS, custom CSS in `/app/globals.css` and `/styles/`
+
+File/Folder Structure (Key Parts):
+----------------------------------
+- `/app/` - Main app pages and API routes
+- `/components/` - UI and form components
+- `/lib/` - Utility libraries (PDF/docx generation, auth, etc.)
+- `/local_server_data/` - Order and user data, generated files
+- `/public/` - Static assets (images, logos)
+- `/scripts/` - Utility scripts for admin tasks
+
+Deployment:
+-----------
+- Can be run locally or deployed to a server (see EC2_DEPLOYMENT_GUIDE.txt)
+
+Customization:
+--------------
+- All forms, document templates, and business logic can be customized in their respective files.
+- UI components are reusable and can be extended as needed.
+
+---
+For more details, see the README or individual component and API files. 
